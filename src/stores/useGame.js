@@ -35,6 +35,9 @@ export default create(subscribeWithSelector((set) => {
                 : {}
             )
         },
+
+        SSREffect: false,
+        setSSREffrct: () => set((state) => ({ SSREffect: !state.SSREffect })),
     }
 }))
 

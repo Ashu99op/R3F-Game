@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import Experience from './Experience.js'
 import { KeyboardControls } from '@react-three/drei'
 import Interface from './Interface.js'
+import SSRCheckBox from './SSRCheckBox.js'
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
@@ -29,6 +30,7 @@ root.render(
             <Experience />
         </Canvas>
 
+        <SSRCheckBox />
         <Interface />
         
     </KeyboardControls>

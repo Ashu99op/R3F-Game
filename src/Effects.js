@@ -1,11 +1,14 @@
 import React from 'react'
-import { SSR, DepthOfField, EffectComposer, Bloom } from '@react-three/postprocessing'
+import { SSR, DepthOfField, EffectComposer, Bloom } from '@react-three/postprocessing';
+import useGame from './stores/useGame';
 
-const Effects = () => {
+const Effects = () => {    
+    const isSSR = useGame(state => state.SSREffect);
+    
     return (
         <EffectComposer>
-            {/* <Bloom /> */}
-            <SSR
+            <Bloom intensity={1}/>
+            {isSSR && <SSR
                 intensity={0.45}
                 exponent={1}
                 distance={10}
@@ -30,7 +33,7 @@ const Effects = () => {
                 useRoughnessMap={true}
                 resolutionScale={1}
                 velocityResolutionScale={1}
-            />
+            />}
             <DepthOfField
                 focusDistance={0.01}
                 focusLength={0.2}

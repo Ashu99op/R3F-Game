@@ -127,9 +127,16 @@ const Player = () => {
         >
             <mesh castShadow >
                 <icosahedronGeometry args={[0.3, 1]} />
-                <meshStandardMaterial flatShading color="mediumpurple" />
-            </mesh>
-        </RigidBody>
+                <meshStandardMaterial 
+                 flatShading 
+                 color="mediumpurple" 
+                 emissive="mediumpurple"
+                 emissiveIntensity={2}
+                 toneMapped={false}
+                 roughness={0}
+                />
+            </mesh >
+        </RigidBody >
     )
 }
 

@@ -14,7 +14,7 @@ const spinnerTrapGeometry = new THREE.BoxGeometry(3.5, 0.3, 0.3);
 
 const f1Material = new THREE.MeshStandardMaterial({ color: "#111111", metalness: 0, roughness: 0 })
 const f2Material = new THREE.MeshStandardMaterial({ color: "#222222", metalness: 0, roughness: 0 })
-const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "#ff0000", metalness: 0, roughness: 1 })
+const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "#ff0000", metalness: 0, roughness: 5 })
 const wallMaterial = new THREE.MeshStandardMaterial({ color: "#887777", metalness: 0, roughness: 0 })
 
 // const Spear = ({ position, scale }) => {
@@ -61,8 +61,8 @@ export const BlockStart = ({ position = [0, 0, 0] }) => {
     return (
         <group position={position}>
             <Float floatIntensity={0.25} rotationIntensity={0.25} >
-                <Text 
-                    scale={ 0.4 } 
+                <Text
+                    scale={0.4}
                     maxWidth={0.25}
                     lineHeight={0.75}
                     textAlign='right'
@@ -70,7 +70,7 @@ export const BlockStart = ({ position = [0, 0, 0] }) => {
                     rotation-y={-0.25}
                 >
                     Marbel Race
-                    <meshBasicMaterial toneMapped={false}/>
+                    <meshBasicMaterial toneMapped={false} />
                 </Text>
             </Float>
             <mesh
@@ -197,17 +197,21 @@ export const BlockAxe = ({ position = [0, 0, 0] }) => {
 export const BlockEnd = ({ position = [0, 0, 0] }) => {
     const burger = useGLTF("./hamburger.glb");
 
+    useFrame((state, delta) => {
+        burger.scene.rotation.y +=  delta * 0.15;
+    })
+
     burger.scene.children.forEach((mesh) => mesh.castShadow = true);
 
     return (
         <group position={position}>
-            <Text 
-                    scale={ 0.5 } 
-                    position={[0, 1.5, 2]}
-                >
-                    FINISHED
-                    <meshBasicMaterial toneMapped={false}/>
-                </Text>
+            <Text
+                scale={0.5}
+                position={[0, 1.5, 2]}
+            >
+                FINISHED
+                <meshBasicMaterial toneMapped={false} />
+            </Text>
             <mesh
                 geometry={boxGeometry}
                 position={[0, -0.1, 0]}
@@ -231,35 +235,35 @@ export const BlockEnd = ({ position = [0, 0, 0] }) => {
 
 export const Bounds = ({ length = 1 }) => {
     return (
-    <RigidBody type='fixed' friction={0} restitution={0.2}>
-        <mesh
-            geometry={boxGeometry}
-            position={[2.1, 0.55, -((length * 4) / 2) + 2]}
-            scale={[0.2, 1.5, length * 4]}
-            material={wallMaterial}
-            castShadow
-        />
-        <mesh
-            geometry={boxGeometry}
-            position={[-2.1, 0.55, -((length * 4) / 2) + 2]}
-            scale={[0.2, 1.5, length * 4]}
-            material={wallMaterial}
-            receiveShadow
-        />
-        <mesh
-            geometry={boxGeometry}
-            position={[0, 0.55, -(length * 4) + 2]}
-            scale={[4, 1.5, 0.3]}
-            material={wallMaterial}
-            receiveShadow
-        />
-        <CuboidCollider 
-            args={[2, 0.1, length * 2]}
-            position={[0, -0.1, - (length * 2) + 2]}
-            restitution={0.2}
-            friction={1}
-        />
-    </RigidBody>
+        <RigidBody type='fixed' friction={0} restitution={0.2}>
+            <mesh
+                geometry={boxGeometry}
+                position={[2.1, 0.55, -((length * 4) / 2) + 2]}
+                scale={[0.2, 1.5, length * 4]}
+                material={wallMaterial}
+                castShadow
+            />
+            <mesh
+                geometry={boxGeometry}
+                position={[-2.1, 0.55, -((length * 4) / 2) + 2]}
+                scale={[0.2, 1.5, length * 4]}
+                material={wallMaterial}
+                receiveShadow
+            />
+            <mesh
+                geometry={boxGeometry}
+                position={[0, 0.55, -(length * 4) + 2]}
+                scale={[4, 1.5, 0.3]}
+                material={wallMaterial}
+                receiveShadow
+            />
+            <CuboidCollider
+                args={[2, 0.1, length * 2]}
+                position={[0, -0.1, - (length * 2) + 2]}
+                restitution={0.2}
+                friction={1}
+            />
+        </RigidBody>
     )
 }
 
@@ -280,8 +284,8 @@ export const Level = ({
     return (
         <>
             <BlockStart position={[0, 0, 0]} />
-            {blocks.map((Block, i) => <Block key={i} position={[0, 0, -((i + 1) * 4)]} />)} 
-            <BlockEnd   position={[0, 0, -((count + 1) * 4)]} />
+            {blocks.map((Block, i) => <Block key={i} position={[0, 0, -((i + 1) * 4)]} />)}
+            <BlockEnd position={[0, 0, -((count + 1) * 4)]} />
 
             <Bounds length={count + 2} />
         </>

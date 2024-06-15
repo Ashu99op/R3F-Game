@@ -66,3 +66,24 @@ body,
 .controls .key.active {
     background: #ffffff99;
 }
+
+.checkbox-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffffff;
+    background: #ffffff44;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #ffffff;
+    gap: 6px;
+    cursor: pointer;
+  }
