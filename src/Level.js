@@ -122,6 +122,44 @@ export const BlockSpinner = ({ position = [0, 0, 0] }) => {
     )
 }
 
+export const BlockVSpinner = ({ position = [0, 0, 0] }) => {
+    const [speed] = useState(() => (Math.random() + 0.5) * (Math.random() < 0.5 ? -1 : 1));
+    const obstacle = useRef();
+    useFrame((state) => {
+        const time = state.clock.getElapsedTime();
+
+        const rotation = new THREE.Quaternion()
+        rotation.setFromEuler(new THREE.Euler(0, 0, (time * speed)*2))
+        obstacle.current.setNextKinematicRotation(rotation)
+    })
+    return (
+        <group position={position}>
+            <mesh
+                geometry={boxGeometry}
+                material={f2Material}
+                position={[0, -0.1, 0]}
+                scale={[4, 0.2, 4]}
+                receiveShadow
+            />
+            <RigidBody
+                ref={obstacle}
+                type='kinematicPosition'
+                position={[0, 0.3, 0]}
+                restitution={0.2}
+                friction={0}
+            >
+                <mesh
+                    geometry={boxGeometry}
+                    material={obstacleMaterial}
+                    scale={[3.5, 0.3, 0.3]}
+                    receiveShadow
+                    castShadow
+                />
+            </RigidBody>
+        </group>
+    )
+}
+
 export const BlockLimbo = ({ position = [0, 0, 0] }) => {
     const [offset] = useState(() => (Math.random() * Math.PI * 2))
     const obstacle = useRef();
@@ -223,7 +261,7 @@ export const BlockEnd = ({ position = [0, 0, 0] }) => {
             <RigidBody
                 type='fixed'
                 colliders="hull"
-                friction={10}
+                friction={1}
                 restitution={0.2}
                 position={[0, 0.25, 0]}
             >
@@ -270,7 +308,7 @@ export const Bounds = ({ length = 1 }) => {
 
 export const Level = ({
     count = 5,
-    types = [BlockSpinner, BlockAxe, BlockLimbo],
+    types = [BlockSpinner, BlockAxe, BlockLimbo, BlockVSpinner],
     seed = 0,
 }) => {
     const blocks = useMemo(() => {

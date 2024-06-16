@@ -61,13 +61,17 @@ const Player = () => {
 
     useFrame((state, delta) => {
         //Controls
-        const { forward, backward, leftward, rightward } = getKeys();
+        const { forward, backward, leftward, rightward, Boost } = getKeys();
         const impulse = { x: 0, y: 0, z: 0 };
         const torque = { x: 0, y: 0, z: 0 };
 
-        const impulseStrength = 0.6 * delta;
-        const torqueStrength = 0.2 * delta;
+        let impulseStrength = 0.3 * delta;
+        let torqueStrength = 0.2 * delta;
 
+        if(Boost) {
+            impulseStrength = 0.6 * delta;
+            torqueStrength = 0.4 * delta;
+        }
         if (forward) {
             impulse.z -= impulseStrength;
             torque.x -= torqueStrength;

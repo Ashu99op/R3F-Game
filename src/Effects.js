@@ -37,7 +37,7 @@ const Effects = () => {
             <DepthOfField
                 focusDistance={0.01}
                 focusLength={0.2}
-                bokehScale={3}
+                bokehScale={2}
             />
         </EffectComposer>
     )

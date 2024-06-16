@@ -3,7 +3,9 @@ import { subscribeWithSelector } from 'zustand/middleware';
 
 export default create(subscribeWithSelector((set) => {
     return {
-        count: 10,
+        count: 15,
+        setCount: (newCount) => set({ count: newCount }),
+
         blockSeed: 0,
         startTime: 0,
         endTime: 0,
